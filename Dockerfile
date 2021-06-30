@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:12-alpine
 MAINTAINER Jonas Eller
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
