@@ -2,6 +2,7 @@ name: cicd
 on:
   push:
     branches:
+      - feature/build-pipeline
       - main
   pull_request:
     branches:
