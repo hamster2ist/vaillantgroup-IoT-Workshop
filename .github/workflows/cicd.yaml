@@ -23,15 +23,25 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
       - name: debug
         run: ls -la ./target | grep .jar
+
       - run: mkdir staging && cp target/*.jar staging && cp Dockerfile staging && cp src/main/k8s/deployment.yaml staging
       - uses: actions/upload-artifact@v2
         with:
           name: Package
           path: staging
+
+
   build_image:    #hier dann download-> jar && dockerfile && deployment.yaml
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
+        with:
+          name: staging
+
+      - name: Display structrue of download files
+        run: ls -R
 
 
 
