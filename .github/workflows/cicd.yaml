@@ -25,19 +25,20 @@ jobs:
       - name: debug
         run: ls -la ./target | grep .jar
 
-      - run: mkdir staging && cp target/*.jar staging && cp Dockerfile staging && cp src/main/k8s/deployment.yaml staging
+      - run: mkdir files
       - uses: actions/upload-artifact@v2
         with:
-          name: Package
-          path: staging
+          name: files
+          path: |
+            target/*.jar
+            Dockerfile
+            src/main/k8s/deployment.yaml
 
 
   build_image:
     needs: [build_jar]
     runs-on: ubuntu-latest
     steps:
-     # - uses: actions/checkout@v2
-
       - uses: actions/download-artifact@v2
         with:
           name: Package
@@ -49,12 +50,10 @@ jobs:
 
 
   push_to_dockerhub:
+    needs: [build_image]
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-    #  - name: Check out the repo
-    #    uses: actions/checkout@v2
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
