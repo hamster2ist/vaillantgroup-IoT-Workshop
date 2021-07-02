@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    load-balancer.hetzner.cloud/location: nbg1-dc3
   name: workshop-sensor-data-collector
   labels:
     app: workshop-sensor-data-collector
 spec:
   type: LoadBalancer
-  externalIPs:
-  - 116.203.6.48
   selector:
     app: workshop-sensor-data-collector
   ports:
