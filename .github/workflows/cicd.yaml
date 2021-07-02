@@ -10,7 +10,9 @@ on:
 
 jobs:
   #compile:
+
   build_jar:
+    name: Build Jar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +38,7 @@ jobs:
 
 
   build_and_push_to_dockerhub:
-    name: Push Docker image to Docker Hub
+    name: Build and Push Docker image to Docker Hub
     needs: [build_jar]
     runs-on: ubuntu-latest
     steps:
@@ -73,4 +75,15 @@ jobs:
 
 
 
-  #deploy_to_kubernetes:
+  deploy_to_kubernetes:
+    name: Build and Push Docker image to Docker Hub
+    needs: [build_and_push_to_dockerhub]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-hcloud@v1
+      - run: hcloud version
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+
+
