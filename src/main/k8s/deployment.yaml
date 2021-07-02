@@ -6,6 +6,7 @@ metadata:
     app: workshop-sensor-data-collector
 spec:
   type: LoadBalancer
+  exernalIPs: 116.203.6.48
   selector:
     app: workshop-sensor-data-collector
   ports:
