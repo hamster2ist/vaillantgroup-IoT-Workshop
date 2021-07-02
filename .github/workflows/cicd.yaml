@@ -27,14 +27,20 @@ jobs:
       - name: debug
         run: ls -la ./target | grep .jar
 
-      - run: mkdir files
+      - run: mkdir buildDockerFiles
       - uses: actions/upload-artifact@v2
         with:
-          name: files
+          name: buildDockerFiles
           path: |
             target/*.jar
             Dockerfile
-            src/main/k8s/deployment.yaml
+
+      - run: mkdir kubernetesFiles
+      - uses: actions/upload-artifact@v2
+        with:
+          name: kubernetesFiles
+          path: src/main/k8s/deployment.yaml
+
 
 
   build_and_push_to_dockerhub:
@@ -44,7 +50,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: files
+          name: buildDockerFiles
 
 
       - name: Display structrue of download files
@@ -76,14 +82,21 @@ jobs:
 
 
   deploy_to_kubernetes:
-    name: Build and Push Docker image to Docker Hub
+    name: Deploy to Kubernetes
     needs: [build_and_push_to_dockerhub]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: actions/setup-hcloud@v1
-      - run: hcloud version
-        env:
-          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+      - uses: actions/download-artifact@v2
+        with:
+           name: kubernetesFiles
+
+      - name: Display structrue of download files
+        run: ls -la
+
+      - uses: danielr1996/kubectl-action@1.0.0
+        name: Deploy
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          args: apply -f src/main/k8s/deployment.yaml
 
 
