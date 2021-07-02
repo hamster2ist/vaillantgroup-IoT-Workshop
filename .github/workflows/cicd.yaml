@@ -99,4 +99,6 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           args: apply -n workshop -f deployment.yaml
 
+      - name: wait for all readinessProbes
+        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=30s
 
