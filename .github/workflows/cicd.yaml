@@ -67,7 +67,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: hamster2ist/workshop-sensor-data-collector:latest
+          tags: jomaseller/workshop-sensor-data-collector:latest
 
 
 
