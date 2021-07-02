@@ -69,10 +69,11 @@ spec:
         runAsUser: 1001
 
 ---
+
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ${workshop-sensor-data-collector}
+  name: workshop-sensor-data-collector
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -81,5 +82,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: $workshop-sensor-data-collector
+              serviceName: workshop-sensor-data-collector
               servicePort: 8080
