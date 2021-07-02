@@ -49,7 +49,7 @@ jobs:
             src/main/k8s/deployment.yaml
 
       - name: Display structrue of download files
-        run: ls -R
+        run: ls -la
 
  #     - name: Set up QEMU
  #       uses: docker/setup-qemu-action@v1
