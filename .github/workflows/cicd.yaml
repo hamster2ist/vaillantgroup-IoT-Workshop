@@ -100,5 +100,5 @@ jobs:
           args: apply -n workshop -f deployment.yaml
 
       - name: wait for all readinessProbes
-        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=30s
+        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector
 
