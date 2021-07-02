@@ -97,6 +97,6 @@ jobs:
         name: Deploy
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          args: apply -f deployment.yaml
+          args: apply -n workshop -f deployment.yaml
 
 
