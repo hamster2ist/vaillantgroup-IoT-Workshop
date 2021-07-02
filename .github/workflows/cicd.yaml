@@ -35,7 +35,8 @@ jobs:
             src/main/k8s/deployment.yaml
 
 
-  build_image:
+  build_and_push_to_dockerhub:
+    name: Push Docker image to Docker Hub
     needs: [build_jar]
     runs-on: ubuntu-latest
     steps:
@@ -46,36 +47,29 @@ jobs:
             target/*.jar
             Dockerfile
             src/main/k8s/deployment.yaml
-            
+
       - name: Display structrue of download files
         run: ls -R
 
-
-
-  push_to_dockerhub:
-    needs: [build_image]
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-#      - name: Extract metadata (tags, labels) for Docker
-#        id: meta
-#        uses: docker/metadata-action@v3
-#        with:
-#          images: my-docker-hub-namespace/my-docker-hub-repository
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: workshop-sensor-data-collector:latest/my-docker-hub-repository
 
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: .
-#          push: true
-#          tags: ${{ steps.meta.outputs.tags }}
-#          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
 
 
