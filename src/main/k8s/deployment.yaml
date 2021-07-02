@@ -67,9 +67,3 @@ spec:
             successThreshold: 1
       securityContext:
         runAsUser: 1001
-
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: <workshop>
