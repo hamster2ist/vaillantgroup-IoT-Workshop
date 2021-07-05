@@ -74,17 +74,17 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: workshop-sensor-data-collector
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /
-            backend:
-              serviceName: workshop-sensor-data-collector
-              servicePort: 8080
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: workshop-sensor-data-collector
+#  annotations:
+#    ingress.kubernetes.io/rewrite-target: /
+#spec:
+#  rules:
+#    - http:
+#        paths:
+#          - path: /
+#            backend:
+#              serviceName: workshop-sensor-data-collector
+#              servicePort: 8080

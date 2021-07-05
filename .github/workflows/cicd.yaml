@@ -96,11 +96,11 @@ jobs:
       - uses: danielr1996/kubectl-action@1.0.0
         name: Deploy
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}    # verschen Gloabl im "Job" zu speichern dammit man nicht immer den selben Code kopieren muss
           args: apply -n workshop -f deployment.yaml
 
       - uses: danielr1996/kubectl-action@1.0.0
         name: wait for all readinessProbes
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          args: -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=70s
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}    # verschen Gloabl im "Job" zu speichern dammit man nicht immer den selben Code kopieren muss
+          args: -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=s
