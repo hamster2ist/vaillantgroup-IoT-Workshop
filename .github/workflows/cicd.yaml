@@ -99,6 +99,8 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
           args: apply -n workshop -f deployment.yaml
 
-      - name: wait for all readinessProbes
-        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector
-
+      - uses: danielr1996/kubectl-action@1.0.0
+        name: wait for all readinessProbes
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          args: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector
