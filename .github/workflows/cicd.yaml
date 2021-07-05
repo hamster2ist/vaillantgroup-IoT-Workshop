@@ -100,5 +100,5 @@ jobs:
           args: apply -n workshop -f deployment.yaml
 
       - name: wait for all readinessProbes
-        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector -w
+        run: kubectl -n workshop rollout status deployment/workshop-sensor-data-collector --namespace=workshop
 
