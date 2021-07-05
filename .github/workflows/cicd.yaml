@@ -103,4 +103,4 @@ jobs:
         name: wait for all readinessProbes
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-          args: -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=40s
+          args: -n workshop rollout status deployment/workshop-sensor-data-collector --timeout=70s
