@@ -56,9 +56,6 @@ jobs:
       - name: Display structrue of download files
         run: ls -la
 
- #     - name: Set up QEMU
- #       uses: docker/setup-qemu-action@v1
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -79,8 +76,6 @@ jobs:
 
 
 
-
-
   deploy_to_kubernetes:
     name: Deploy to Kubernetes
     needs: [build_and_push_to_dockerhub]
@@ -96,7 +91,7 @@ jobs:
       - uses: danielr1996/kubectl-action@1.0.0
         name: Deploy
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}    
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
           args: apply -n workshop -f deployment.yaml
 
       - uses: danielr1996/kubectl-action@1.0.0
