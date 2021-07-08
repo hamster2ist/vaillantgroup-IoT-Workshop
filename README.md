@@ -1,1 +1,1 @@
-# vaillantgroup-IoT-Workshop
+# Vaillantgroup-IoT-Workshop
