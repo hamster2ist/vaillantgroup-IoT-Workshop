@@ -2,15 +2,12 @@ name: cicd
 on:
   push:
     branches:
-      - feature/build-pipeline
       - main
   pull_request:
     branches:
       - main
 
 jobs:
-  #compile:
-
   build_jar:
     name: Build Jar
     runs-on: ubuntu-latest
@@ -41,8 +38,6 @@ jobs:
           name: kubernetesFiles
           path: src/main/k8s/deployment.yaml
 
-
-
   build_and_push_to_dockerhub:
     name: Build and Push Docker image to Docker Hub
     needs: [build_jar]
@@ -51,7 +46,6 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: buildDockerFiles
-
 
       - name: Display structrue of download files
         run: ls -la
@@ -73,8 +67,6 @@ jobs:
           file: Dockerfile
           push: true
           tags: jomaseller/workshop-sensor-data-collector:latest
-
-
 
   deploy_to_kubernetes:
     name: Deploy to Kubernetes
