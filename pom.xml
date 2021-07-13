@@ -8,8 +8,8 @@
 		<version>2.5.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.VaillantgroupIotWorkshop</groupId>
-	<artifactId>backend-blueprint</artifactId>
+	<groupId>com.vaillantgroup.iot</groupId>
+	<artifactId>workshop-sensor-data-collector</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>iot-workshop</name>
 	<description>IoT Workshop Blueprint</description>
@@ -17,6 +17,10 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

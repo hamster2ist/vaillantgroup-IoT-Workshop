@@ -1,0 +1,93 @@
+name: cicd
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_jar:
+    name: Build Jar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: debug
+        run: ls -la ./target | grep .jar
+
+      - run: mkdir buildDockerFiles
+      - uses: actions/upload-artifact@v2
+        with:
+          name: buildDockerFiles
+          path: |
+            target/*.jar
+            Dockerfile
+
+      - run: mkdir kubernetesFiles
+      - uses: actions/upload-artifact@v2
+        with:
+          name: kubernetesFiles
+          path: src/main/k8s/deployment.yaml
+
+  build_and_push_to_dockerhub:
+    name: Build and Push Docker image to Docker Hub
+    needs: [build_jar]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: buildDockerFiles
+
+      - name: Display structrue of download files
+        run: ls -la
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: jomaseller/workshop-sensor-data-collector:latest
+
+  deploy_to_kubernetes:
+    name: Deploy to Kubernetes
+    needs: [build_and_push_to_dockerhub]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+           name: kubernetesFiles
+
+      - name: Display structrue of download files
+        run: ls -la
+
+      - uses: danielr1996/kubectl-action@1.0.0
+        name: Deploy
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          args: apply -n workshop -f deployment.yaml
+
+      - uses: danielr1996/kubectl-action@1.0.0
+        name: wait for all readinessProbes
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          args: rollout status -n workshop deployment/workshop-sensor-data-collector --timeout=300s
