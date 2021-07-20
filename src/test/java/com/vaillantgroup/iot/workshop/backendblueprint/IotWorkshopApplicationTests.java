@@ -1,4 +1,4 @@
-package com.VaillantgroupIotWorkshop.backendblueprint;
+package com.vaillantgroup.iot.workshop.backendblueprint;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

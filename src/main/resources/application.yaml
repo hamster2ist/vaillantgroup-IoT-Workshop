@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://Jonas:u12345@localhost:27017/test
+
+api:
+  baseurl: "api/v1/"
