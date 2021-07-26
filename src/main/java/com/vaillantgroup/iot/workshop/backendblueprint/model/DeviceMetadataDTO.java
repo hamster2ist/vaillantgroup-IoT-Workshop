@@ -1,4 +1,4 @@
-package com.vaillantgroup.iot.workshop.backendblueprint.controller.model;
+package com.vaillantgroup.iot.workshop.backendblueprint.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
