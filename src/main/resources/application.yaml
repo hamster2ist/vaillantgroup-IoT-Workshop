@@ -1,7 +1,9 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://Jonas:u12345@localhost:27017/test
+      uri: mongodb://root:r123456@mongodb.default.svc.cluster.local:27017/admin
+      # TODO: passwort in kubernetes secret auslagern
+
 
 api:
   baseurl: "api/v1/"
