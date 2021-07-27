@@ -51,7 +51,7 @@ public class HumidityService {
         humidityDataEntity.setHumidityValue(humidityDTO.getHumidityValue());
         humidityDataEntity.setDeviceId(humidityDTO.getDeviceId());
         humidityDataEntity.setDeviceMetadata(humidityDTO.getDeviceMetadata());
-        //humidityDataEntity.setCreatedAt(OffsetDateTime.now());
+        humidityDataEntity.setCreatedAt(OffsetDateTime.now());
 
         humidityRepository.insert(humidityDataEntity);
     }
