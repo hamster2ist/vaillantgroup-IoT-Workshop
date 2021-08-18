@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/applicationlogic
   pull_request:
     branches:
       - main

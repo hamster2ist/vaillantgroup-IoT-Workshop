@@ -1,4 +1,4 @@
-package com.VaillantgroupIotWorkshop.backendblueprint;
+package com.vaillantgroup.iot.workshop.backendblueprint;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,3 +11,4 @@ public class IotWorkshopApplication {
 	}
 
 }
+
