@@ -53,6 +53,25 @@ public class HumidityService {
         humidityDataEntity.setDeviceMetadata(humidityDTO.getDeviceMetadata());
         humidityDataEntity.setCreatedAt(OffsetDateTime.now());
 
+
+        Optional<String> optionalDeviceId = Optional.ofNullable(humidityDTO.getDeviceId()) ;
+        HumidityValuesDTO humidityValuesDTO = getAllHumidityDataByDeviceId(optionalDeviceId);
+        double avgHumidityValue;
+
+        if (humidityValuesDTO.getHumidityValues().size() % 60 == 0){
+            avgHumidityValue = getAvgHumidityValue(humidityValuesDTO);
+        }
+
         humidityRepository.insert(humidityDataEntity);
+    }
+
+    public double getAvgHumidityValue(HumidityValuesDTO humidityValuesDTO){
+        double average = 0.0;
+
+        for (int i=0; i < 60; i++){
+            average = average + humidityValuesDTO.getHumidityValues().get(humidityValuesDTO.getHumidityValues().size() - i);
+        }
+
+        return average;
     }
 }

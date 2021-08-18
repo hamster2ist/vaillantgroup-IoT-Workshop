@@ -18,4 +18,6 @@ public class HumidityValuesDTO {
 
     private DeviceMetadataDTO deviceMetadata;
 
+    private int avgCounter;
+
 }
