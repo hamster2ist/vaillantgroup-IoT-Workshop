@@ -71,7 +71,6 @@ public class HumidityService {
         for (int i=0; i < 60; i++){
             average = average + humidityValuesDTO.getHumidityValues().get(humidityValuesDTO.getHumidityValues().size() - i);
         }
-
         return average;
     }
 }
